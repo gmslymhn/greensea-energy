@@ -24,8 +24,8 @@ public class BaseEntity implements Serializable {
     /**
      * 创建用户
      */
-    @TableField("create_user")
-    private Long createUser;
+    @TableField("create_gm")
+    private String createUser;
     /**
      * 创建时间
      */
@@ -34,8 +34,8 @@ public class BaseEntity implements Serializable {
     /**
      * 修改用户
      */
-    @TableField("update_user")
-    private Long updateUser;
+    @TableField("update_gm")
+    private String updateUser;
     /**
      * 修改时间
      */
@@ -46,5 +46,5 @@ public class BaseEntity implements Serializable {
      */
     @TableLogic
     @TableField("del_flag")
-    private boolean delFlag;
+    private Integer delFlag;
 }

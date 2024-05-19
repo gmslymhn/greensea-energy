@@ -113,7 +113,7 @@ springdoc:
   group-configs:
     - group: '框架'
       paths-to-match: '/**'
-      packages-to-scan: greensea.energy.controller
+      packages-to-scan: greensea.energy.framework.controller
 # Xxl-Job分布式定时任务调度中心
 xxl:
   job:
@@ -154,7 +154,7 @@ mybatis-plus:
       # 主键类型：自增
       id-type: ASSIGN_ID
       logic-delete-field: flag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-delete-value: 6 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   # mapper xml文件路径
   mapper-locations: classpath:mapper/*.xml
