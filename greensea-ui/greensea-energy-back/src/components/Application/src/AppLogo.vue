@@ -8,7 +8,7 @@
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
       <!--          {{ title }}-->
     </div>
-    <img class="testLogo" src="../../../assets/images/textLogo.png" />
+    <img class="textLogo" src="../../../assets/images/textLogo.png" />
     <!--    <div></div>-->
   </div>
 </template>
@@ -92,7 +92,8 @@
       line-height: normal;
     }
   }
-  .testLogo {
-    width: 569px;
+  .textLogo {
+    width: 120px;
+    height: 20px;
   }
 </style>
