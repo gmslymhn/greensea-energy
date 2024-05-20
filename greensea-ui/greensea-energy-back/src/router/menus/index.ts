@@ -1,3 +1,5 @@
+// 这个组件其实是一个菜单组件，这个东西和路由匹配才能显示，项目的菜单配置
+
 import type { Menu, MenuModule } from '@/router/types';
 import type { RouteRecordNormalized } from 'vue-router';
 
