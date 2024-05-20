@@ -99,6 +99,13 @@ spring:
       max-file-size: 10MB
       # 请求最大限制
       max-request-size: 20MB
+  mail:
+    # 你的邮箱，发邮件的邮箱
+    username: gmslymhn@163.com
+    # 你的授权码，邮箱里面设置->POP3/SMTP/IMAP
+    password: ZHOMYZQXXQVJVNJK
+    host: smtp.163.com
+
 
 server:
   port: 8081
@@ -167,7 +174,7 @@ token:
   # 令牌密钥
   secret: tyutselabababbaaabcdefghijklmnopqrstuvwxyzaaaaaaaaaaaaa32136758967
   # 令牌有效期（单位分钟）
-  expireTime: 30
+  expireTime: 1440
 
 # 用户配置
 user:

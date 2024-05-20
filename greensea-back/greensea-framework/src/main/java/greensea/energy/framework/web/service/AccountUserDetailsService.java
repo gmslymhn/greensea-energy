@@ -57,11 +57,11 @@ public class AccountUserDetailsService implements UserDetailsService {
         if (userGmEntity.getType().equals("A")){
             GmEntity gmEntity = gmMapper.selectById(userGmEntity.getId());
             roleEntity = roleMapper.selectById(Integer.valueOf(gmEntity.getGmType()));
-            return new LoginUser(gmEntity.getGmId(),gmEntity.getGmNickname(),null, gmEntity.getGmState(), gmEntity.getGmAccount(),  gmEntity.getGmPassword(), roleEntity.getRolekey(),null);
+            return new LoginUser(gmEntity.getGmId(),null, gmEntity.getGmState(), gmEntity.getGmAccount(),  gmEntity.getGmPassword(),userGmEntity.getType() ,roleEntity.getRolekey(),null);
         }else if (userGmEntity.getType().equals("B")){
             UserEntity userEntity = userMapper.selectById(userGmEntity.getId());
             roleEntity = roleMapper.selectById(userEntity.getUserType());
-            return new LoginUser(userEntity.getUserId(),userEntity.getUserNickname(),null, userEntity.getUserState(), userEntity.getUserAccount(),  userEntity.getUserPassword(), roleEntity.getRolekey(),null);
+            return new LoginUser(userEntity.getUserId(),null, userEntity.getUserState(), userEntity.getUserAccount(),  userEntity.getUserPassword(), userGmEntity.getType(),roleEntity.getRolekey(),null);
         }
         return null;
     }

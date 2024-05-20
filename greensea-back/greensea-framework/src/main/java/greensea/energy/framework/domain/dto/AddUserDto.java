@@ -42,13 +42,22 @@ public class AddUserDto {
     /**
      * 电话
      */
+    @Schema(description = "电话")
     @NotBlank(message = "电话不能为空")
     @Size(min=11, max=11,message="电话长度必须在为11位")
     private String userPhone;
     /**
      * 邮箱
      */
-    @Email
+    @Schema(description = "邮箱")
+    @Email(message = "邮箱格式异常")
     @NotBlank(message = "邮箱不能为空")
     private String userEmail;
+    /**
+     * 验证码
+     */
+    @Schema(description = "验证码")
+    @NotBlank(message = "验证码不能为空")
+    @Size(min=UserConstants.VERIFCATION_CODE_LENGTH, max=UserConstants.VERIFCATION_CODE_LENGTH,message="验证码错误！")
+    private String verificationCode;
 }

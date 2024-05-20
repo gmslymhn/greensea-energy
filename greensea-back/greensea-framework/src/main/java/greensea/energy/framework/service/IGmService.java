@@ -12,4 +12,6 @@ import greensea.energy.framework.domain.dto.GmLoginDto;
  **/
 public interface IGmService {
     R loginGm(GmLoginDto gmLoginDto);
+
+    R logoutGm();
 }

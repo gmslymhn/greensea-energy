@@ -29,7 +29,6 @@ public class LoginUser implements UserDetails {
      * 用户id
      */
     private Integer userId;
-    private String userName;
 
     /**
      * 用户唯一标识
@@ -41,6 +40,8 @@ public class LoginUser implements UserDetails {
     private String userAccount;
 
     private String userPassword;
+
+    private String userType;
 
     /**
      * 权限

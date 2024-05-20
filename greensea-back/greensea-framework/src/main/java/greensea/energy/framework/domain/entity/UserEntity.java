@@ -3,6 +3,7 @@ package greensea.energy.framework.domain.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import greensea.energy.common.constant.UserConstants;
+import greensea.energy.framework.domain.dto.AddUserDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -91,4 +92,5 @@ public class UserEntity {
     @TableLogic
     @TableField("del_flag")
     private Integer delFlag;
+
 }

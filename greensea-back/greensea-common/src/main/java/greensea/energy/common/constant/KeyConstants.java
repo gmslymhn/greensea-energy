@@ -33,4 +33,14 @@ public class KeyConstants {
      */
     public static final String RESET_PASSWORD_KEY = "reset_password:";
 
+    /**
+     * 注册验证码
+     */
+    public static final String REGISTER_VERIFCATION_CODE = "register_verifcation_code:";
+
+    /**
+     * 注册验证
+     */
+    public static final String REGISTER_VERIFCATION_FREQUENCY = "register_verifcation_frequency:";
+
 }

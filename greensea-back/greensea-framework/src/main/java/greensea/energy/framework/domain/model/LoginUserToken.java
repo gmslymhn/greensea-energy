@@ -28,7 +28,7 @@ public class LoginUserToken {
     /**
      * 登录时间
      */
-    private String loginTime;
+    private Long loginTime;
 
     /**
      * 登录IP地址

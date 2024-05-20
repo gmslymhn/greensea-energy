@@ -53,7 +53,7 @@ public class SecurityConfig {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
     private AccountUserDetailsService accountUserDetailsService;
-    private static final String[] URL_WHITELIST = {"/background/gm/login", "/background/adm/login/before","/favicon.ico","/doc.html","/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs/**", "/druid/**","/foreign/**"};
+    private static final String[] URL_WHITELIST = {"/background/gm/login","/background/user/login", "/background/user/register","/background/user/register/verify","/favicon.ico","/doc.html","/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs/**", "/druid/**","/foreign/**"};
 
     private static final String[] URL_WHITELIST_GET = {"/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**","/webjars/**"};
 

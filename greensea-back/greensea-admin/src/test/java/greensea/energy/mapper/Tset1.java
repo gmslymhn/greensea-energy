@@ -8,7 +8,6 @@ import greensea.energy.framework.jwt.JwtUtil;
 import greensea.energy.framework.mapper.GmMapper;
 import greensea.energy.framework.mapper.RoleMapper;
 import greensea.energy.framework.mapper.UserGmMapper;
-import greensea.energy.framework.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

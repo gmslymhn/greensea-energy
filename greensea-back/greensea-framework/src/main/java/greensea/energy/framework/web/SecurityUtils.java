@@ -30,9 +30,9 @@ public class SecurityUtils {
     /**
      * 获取用户账户
      **/
-    public static String getUsername() {
+    public static String getUserAccount() {
         try {
-            return getLoginUser().getUsername();
+            return getLoginUser().getUserAccount();
         } catch (Exception e) {
             throw new ServiceException("获取用户账户异常", ErrorCode.ACCOUNT_ABNORMAL);
         }

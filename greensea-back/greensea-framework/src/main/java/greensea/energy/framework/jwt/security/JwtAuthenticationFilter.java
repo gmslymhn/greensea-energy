@@ -2,7 +2,14 @@ package greensea.energy.framework.jwt.security;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import greensea.energy.common.domain.R;
+import greensea.energy.common.domain.ResponseCode;
+import greensea.energy.common.exception.BaseException;
+import greensea.energy.common.utils.ObjectUtils;
+import greensea.energy.common.utils.http.ServletUtils;
+import greensea.energy.framework.domain.model.LoginUser;
 import greensea.energy.framework.jwt.JwtUtil;
+import greensea.energy.framework.web.service.TokenService;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -33,8 +40,8 @@ import java.util.Map;
 public class JwtAuthenticationFilter  extends OncePerRequestFilter {
     @Resource
     private JwtUtil jwtUtil;
-//    @Autowired
-//    private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -45,12 +52,16 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-//        log.info(token);
-//        Claims claims = jwtUtil.getClaimsByToken(token);
-//        if (claims == null) {
-//            throw new BaseException(ResponseCode.Bad_Request, "token异常");
-//        }
-//        if (jwtUtil.isTokenExpired(claims.getExpiration())) {
+        log.info(token);
+        Claims claims = jwtUtil.getClaimsByToken(token);
+        if (claims == null) {
+            throw new BaseException(ResponseCode.Bad_Request, "token异常");
+        }
+        if (jwtUtil.isTokenExpired(claims.getExpiration())) {
+            String msg = "请重新登陆!";
+            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
+            return;
+        }
 //
 //            LoginUserToken loginUserToken =  tokenService.getLoginUserToken(request);
 //            if (ObjectUtils.isNotNull(loginUserToken)){
@@ -70,17 +81,17 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 //            }
 //
 //        }
-//        LoginUser loginUser = tokenService.getLoginUser(request);
-//
-//        log.info(String.valueOf(loginUser));
-//        if (ObjectUtils.isNull(loginUser)){
-//            String msg = "请重新登陆!";
-//            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
-//            return;
-//        }
+        LoginUser loginUser = tokenService.getLoginUser(request);
+
+        log.info(String.valueOf(loginUser));
+        if (ObjectUtils.isNull(loginUser)){
+            String msg = "请重新登陆!";
+            ServletUtils.renderString(response, JSONUtil.toJsonStr(R.error(ResponseCode.Unauthorized,msg)));
+            return;
+        }
 
         // 构建UsernamePasswordAuthenticationToken，这里密码为null，是因为提供了正确的token，实现自动登录
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(null, null, null);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, null);
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

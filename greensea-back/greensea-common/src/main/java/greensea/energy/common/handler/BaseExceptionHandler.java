@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 /**
  * @ClassName: BaseExceptionHandler
@@ -90,6 +91,7 @@ public class BaseExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public R throwCustomException(MethodArgumentNotValidException methodArgumentNotValidException, HttpServletRequest request){
 
         String url = request.getRequestURL().toString();
@@ -97,6 +99,18 @@ public class BaseExceptionHandler {
         log.error(url+"[ @Vaild异常捕获 ] " + methodArgumentNotValidException.getMessage());
 
         String e = methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage();
+
+        return R.error(ResponseCode.ERROR, e);
+    }
+    @ResponseBody
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public R handlerMethodValidationException(HandlerMethodValidationException handlerMethodValidationException, HttpServletRequest request){
+
+        String url = request.getRequestURL().toString();
+
+        log.error(url+"[ @Vaild异常捕获 ] " + handlerMethodValidationException.getMessage());
+
+        String e = handlerMethodValidationException.getLocalizedMessage();
 
         return R.error(ResponseCode.ERROR, e);
     }

@@ -3,6 +3,7 @@ package greensea.energy.framework.controller.background.gm;
 import greensea.energy.common.domain.R;
 import greensea.energy.framework.domain.dto.GmLoginDto;
 import greensea.energy.framework.service.IGmService;
+import greensea.energy.framework.web.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +30,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class GmController {
     @Autowired
     private IGmService iGmService;
+    @Autowired
+    private LoginService loginService;
     @PostMapping("/login")
-    @Operation(summary = "登陆")
+    @Operation(summary = "管理员登陆")
     public R login(@RequestBody @Validated GmLoginDto gmLoginDto) {
+        R verifyr = loginService.mayLogin(gmLoginDto.getGmAccount());
+        if (verifyr.getCode()!=200){
+            return verifyr;
+        }
         R r = iGmService.loginGm(gmLoginDto);
+        return r;
+    }
+    @PostMapping("/logout")
+    @Operation(summary = "管理员登出")
+    public R logout() {
+        R r = iGmService.logoutGm();
         return r;
     }
 }

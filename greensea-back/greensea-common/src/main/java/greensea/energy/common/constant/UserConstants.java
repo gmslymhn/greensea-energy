@@ -38,6 +38,11 @@ public class UserConstants {
     public static final int PASSWORD_MAX_LENGTH = 20;
 
     /**
+     * 验证码长度
+     */
+    public static final int VERIFCATION_CODE_LENGTH = 6;
+
+    /**
      * 用户默认头像
      */
     public static final Integer AVATAR_ID = 1;
