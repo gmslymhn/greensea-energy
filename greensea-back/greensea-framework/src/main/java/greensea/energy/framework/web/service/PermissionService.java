@@ -41,4 +41,18 @@ public class PermissionService {
         }
         return false;
     }
+
+    public boolean hasLoginType(String Logintype){
+        if (StringUtils.isEmpty(Logintype)) {
+            return false;
+        }
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        if (ObjectUtils.isNull(loginUser) ||ObjectUtils.isNull(loginUser.getPermission())) {
+            return false;
+        }
+        if (loginUser.getUserType().equals(Logintype)){
+            return true;
+        }
+        return false;
+    }
 }

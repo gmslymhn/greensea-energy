@@ -38,6 +38,22 @@ public class SecurityUtils {
         }
     }
 
+    public static String getPermission(){
+        try {
+            return getLoginUser().getPermission();
+        } catch (Exception e) {
+            throw new ServiceException("获取用户账户异常", ErrorCode.ACCOUNT_ABNORMAL);
+        }
+    }
+    public static String getUserType(){
+        try {
+            return getLoginUser().getUserType();
+        } catch (Exception e) {
+            throw new ServiceException("获取用户账户异常", ErrorCode.ACCOUNT_ABNORMAL);
+        }
+    }
+
+
 
 
     /**

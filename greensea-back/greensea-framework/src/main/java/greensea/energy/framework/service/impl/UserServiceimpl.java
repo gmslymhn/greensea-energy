@@ -81,36 +81,36 @@ public class UserServiceimpl implements IUserService {
         QueryWrapper<UserGmEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", addUserDto.getUserAccount());
         UserGmEntity userGmEntity = userGmMapper.selectOne(queryWrapper);
-        QueryWrapper<UserMsgEntity> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("user_email", addUserDto.getUserEmail());
-        UserMsgEntity userMsgEntity = userMsgMapper.selectOne(queryWrapper1);
+        QueryWrapper<UserGmEntity> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("email", addUserDto.getUserEmail());
+        UserGmEntity userGmEntity1 = userGmMapper.selectOne(queryWrapper1);
         if (ObjectUtils.isNotNull(userGmEntity)) {
             return R.error("账号已注册！");
         }
-        if(ObjectUtils.isNotNull(userMsgEntity)){
+        if(ObjectUtils.isNotNull(userGmEntity1)){
             return R.error("邮箱已注册！");
         }
         userGmEntity = get1(addUserDto);
         userGmMapper.insert(userGmEntity);
-        UserGmEntity userGmEntity1 = userGmMapper.selectOne(queryWrapper);
-        UserEntity userEntity = get2(addUserDto,userGmEntity1);
+        UserGmEntity userGmEntity2 = userGmMapper.selectOne(queryWrapper);
+        UserEntity userEntity = get2(addUserDto,userGmEntity2);
         userMapper.insert(userEntity);
-        userMsgEntity =get3(addUserDto,userGmEntity1);
+        UserMsgEntity userMsgEntity =get3(addUserDto,userGmEntity2);
         userMsgMapper.insert(userMsgEntity);
         return R.success("注册成功！");
     }
     @Override
     public R verifyRegister(String userAccoount, String userEmail){
-        QueryWrapper<UserMsgEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_email", userEmail);
-        UserMsgEntity userMsgEntity = userMsgMapper.selectOne(queryWrapper);
-        if (ObjectUtils.isNotNull(userMsgEntity)){
+        QueryWrapper<UserGmEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", userEmail);
+        UserGmEntity userGmEntity = userGmMapper.selectOne(queryWrapper);
+        if (ObjectUtils.isNotNull(userGmEntity)){
             return R.error("该邮箱已注册！");
         }
         QueryWrapper<UserGmEntity> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("account", userAccoount);
-        UserGmEntity userGmEntity = userGmMapper.selectOne(queryWrapper1);
-        if (ObjectUtils.isNotNull(userGmEntity)){
+        UserGmEntity userGmEntity1 = userGmMapper.selectOne(queryWrapper1);
+        if (ObjectUtils.isNotNull(userGmEntity1)){
             return R.error("该账号已注册！");
         }
         return loginService.addRegisterVerify(userAccoount,userEmail);
@@ -126,6 +126,7 @@ public class UserServiceimpl implements IUserService {
     private UserGmEntity get1(AddUserDto addUserDto){
         UserGmEntity userGmEntity = new UserGmEntity();
         userGmEntity.setAccount(addUserDto.getUserAccount());
+        userGmEntity.setEmail(addUserDto.getUserEmail());
         userGmEntity.setType("B");
         userGmEntity.setState(true);
         userGmEntity.setDelFlag(0);
@@ -145,7 +146,7 @@ public class UserServiceimpl implements IUserService {
     private UserMsgEntity get3(AddUserDto addUserDto,UserGmEntity userGmEntity){
         UserMsgEntity userMsgEntity = new UserMsgEntity();
         userMsgEntity.setUserId(userGmEntity.getId());
-        userMsgEntity.setUserEmail(addUserDto.getUserEmail());
+//        userMsgEntity.setUserEmail(addUserDto.getUserEmail());
         userMsgEntity.setDelFlag(0);
         userMsgEntity.setUserPhone(addUserDto.getUserPhone());
         return userMsgEntity;

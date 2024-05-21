@@ -1,6 +1,7 @@
 package greensea.energy.framework.service;
 
 import greensea.energy.common.domain.R;
+import greensea.energy.framework.domain.dto.AddGmDto;
 import greensea.energy.framework.domain.dto.GmLoginDto;
 
 /**
@@ -12,6 +13,8 @@ import greensea.energy.framework.domain.dto.GmLoginDto;
  **/
 public interface IGmService {
     R loginGm(GmLoginDto gmLoginDto);
+
+    R addGm(AddGmDto addGmDto);
 
     R logoutGm();
 }

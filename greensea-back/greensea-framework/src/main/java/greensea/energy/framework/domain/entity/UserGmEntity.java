@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import greensea.energy.common.constant.UserConstants;
 import greensea.energy.common.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -35,6 +36,14 @@ public class UserGmEntity extends BaseEntity {
     @NotBlank(message = "账号不能为空")
     @Size(min = UserConstants.USERACCOUNT_MIN_LENGTH, max = UserConstants.USERACCOUNT_MAX_LENGTH, message = "账号必须在5~20字符之间")
     private String account;
+    /**
+     * 邮箱
+     */
+    @TableField("email")
+    @Schema(description = "邮箱")
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式异常")
+    private String email;
 
     /**
      * 类型

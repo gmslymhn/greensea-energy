@@ -57,9 +57,9 @@ public class UserMsgEntity {
     /**
      * 邮箱
      */
-    @TableField("user_email")
-    @Email
-    private String userEmail;
+//    @TableField("user_email")
+//    @Email
+//    private String userEmail;
     /**
      * 备注
      */
