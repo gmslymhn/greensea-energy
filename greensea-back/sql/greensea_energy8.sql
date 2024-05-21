@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 21/05/2024 11:13:17
+ Date: 22/05/2024 02:40:02
 */
 
 SET NAMES utf8mb4;
@@ -216,29 +216,33 @@ CREATE TABLE `gre_device_msg`  (
 DROP TABLE IF EXISTS `gre_directory`;
 CREATE TABLE `gre_directory`  (
   `directory_id` int NOT NULL AUTO_INCREMENT COMMENT '目录id',
-  `directory_icon` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `directory_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '目录名字',
+  `directory_icon` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `directory_path` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `directory_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '目录名字',
+  `directory_title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '目录标题',
+  `directory_redirect` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '重定向',
   `directory_grade` tinyint(1) NULL DEFAULT NULL COMMENT '目录等级（1为一级 2为二级）',
-  `directory_superior` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '目录上级id',
-  `directory_component` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件',
-  `directory_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '目录类型',
+  `directory_superior` int NULL DEFAULT NULL COMMENT '目录上级id',
+  `directory_component` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件',
   `directory_order` tinyint(1) NULL DEFAULT NULL COMMENT '次序',
+  `directory_type` tinyint(1) NULL DEFAULT NULL COMMENT '目录类型',
   `directory_state` tinyint(1) NULL DEFAULT NULL COMMENT '目录状态',
-  `create_gm` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_gm` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `del_flag` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`directory_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gre_directory
 -- ----------------------------
-INSERT INTO `gre_directory` VALUES (1, NULL, '超级管理员目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-05-18 09:33:29', NULL, '2024-05-18 09:33:29', NULL);
-INSERT INTO `gre_directory` VALUES (2, NULL, '管理员目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-05-18 09:33:45', NULL, '2024-05-18 09:33:45', NULL);
-INSERT INTO `gre_directory` VALUES (3, NULL, '企业用户目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-05-18 09:33:54', NULL, '2024-05-18 09:33:54', NULL);
-INSERT INTO `gre_directory` VALUES (4, NULL, '个人用户目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-05-18 09:34:32', NULL, '2024-05-18 09:34:32', NULL);
+INSERT INTO `gre_directory` VALUES (1, NULL, NULL, '超级管理员目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gre_directory` VALUES (2, NULL, NULL, '管理员目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gre_directory` VALUES (3, NULL, NULL, '企业用户目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gre_directory` VALUES (4, NULL, NULL, '个人用户目录', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `gre_directory` VALUES (5, NULL, NULL, '超管一级目录1', NULL, NULL, 1, NULL, NULL, 9, 1, NULL, 0);
+INSERT INTO `gre_directory` VALUES (6, NULL, NULL, '超管一级目录2', NULL, NULL, 1, NULL, NULL, 1, 1, NULL, 0);
+INSERT INTO `gre_directory` VALUES (7, NULL, NULL, '超管一级目录3', NULL, NULL, 1, NULL, NULL, NULL, 1, NULL, 0);
+INSERT INTO `gre_directory` VALUES (8, NULL, NULL, '超管二级目录1', NULL, NULL, 2, 5, NULL, NULL, 1, NULL, 0);
+INSERT INTO `gre_directory` VALUES (9, NULL, NULL, '超管二级目录2', NULL, NULL, 2, 5, NULL, NULL, 1, NULL, 0);
 
 -- ----------------------------
 -- Table structure for gre_directory_port_tag
@@ -277,6 +281,8 @@ CREATE TABLE `gre_gm`  (
 INSERT INTO `gre_gm` VALUES (-1359749118, '321', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
 INSERT INTO `gre_gm` VALUES (1, 'admin', '$2a$10$Q0L2ROlYM29cBDhvlIl86uk8PK7MQgzMGd6K3Df.kU4.yAx4CR2ve', 'admin', '1', NULL, NULL, NULL, 1, 0);
 INSERT INTO `gre_gm` VALUES (2, '321', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `gre_gm` VALUES (8, 'admin1', '$2a$10$o.7X2ky/NYfSqUEY8NCYk.vqcaeb7iUs5vQl.aOBClwvxwHIy7krq', '管理大大', '2', NULL, NULL, NULL, 1, 0);
+INSERT INTO `gre_gm` VALUES (9, 'admin2', '$2a$10$rKh7w1qtGwcZ3.yWYwI6OOt0CohcRGtFfz/7fskAvXMcuAkHXMwsC', '管理大大', '2', NULL, NULL, NULL, 1, 0);
 
 -- ----------------------------
 -- Table structure for gre_gm_device_tag
@@ -311,6 +317,8 @@ CREATE TABLE `gre_gm_msg`  (
 -- ----------------------------
 -- Records of gre_gm_msg
 -- ----------------------------
+INSERT INTO `gre_gm_msg` VALUES (8, NULL, NULL, NULL, '15621342314', NULL, NULL, NULL, 0);
+INSERT INTO `gre_gm_msg` VALUES (9, NULL, NULL, NULL, '15621342314', NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for gre_port
@@ -381,9 +389,9 @@ CREATE TABLE `gre_role`  (
 -- ----------------------------
 -- Records of gre_role
 -- ----------------------------
-INSERT INTO `gre_role` VALUES (1, '超级管理员', 'admin', 'gm', NULL, NULL, '2024-05-17 16:58:48', NULL, '2024-05-20 16:00:50', 0);
-INSERT INTO `gre_role` VALUES (2, '管理员', 'manager', 'gm', NULL, NULL, '2024-05-17 16:58:25', NULL, '2024-05-20 16:01:05', 0);
-INSERT INTO `gre_role` VALUES (3, '企业用户', 'enterprise', 'user', NULL, NULL, NULL, NULL, '2024-05-20 16:01:00', 0);
+INSERT INTO `gre_role` VALUES (1, '超级管理员', 'admin', 'A', NULL, NULL, '2024-05-17 16:58:48', NULL, '2024-05-21 17:06:32', 0);
+INSERT INTO `gre_role` VALUES (2, '管理员', 'manager', 'A', NULL, NULL, '2024-05-17 16:58:25', NULL, '2024-05-21 17:06:33', 0);
+INSERT INTO `gre_role` VALUES (3, '企业用户', 'enterprise', 'B', NULL, NULL, NULL, NULL, '2024-05-21 17:06:35', 0);
 INSERT INTO `gre_role` VALUES (4, '个人用户', 'personal', 'user', NULL, NULL, NULL, NULL, '2024-05-20 16:01:02', 0);
 
 -- ----------------------------
@@ -425,7 +433,7 @@ INSERT INTO `gre_user` VALUES (3, 'testuser1', '$2a$10$BZAAwdRFMgOsc4eq.2oP3eoBF
 INSERT INTO `gre_user` VALUES (4, 'testuser2', '$2a$10$GXwezYcv7ZNWoThNpzLnmuBTPxaD3soXbnYozBNWDpRJfPmUcuKqu', '用户', '3', NULL, NULL, NULL, 1, 0);
 INSERT INTO `gre_user` VALUES (5, 'testuser3', '$2a$10$vJOwtThaW5w/FE4WWsgqVeUXSpuhaBMXtr0m7gmL/g3FpcgncVc3G', '用户', '3', NULL, NULL, NULL, 1, 0);
 INSERT INTO `gre_user` VALUES (6, 'testuser4', '$2a$10$NcAyfAnXn5rZA2Ejpf303.lEoTYcLphrtNTSv35kCJGu3rMDk/L.a', '用户', '3', NULL, NULL, NULL, 1, 0);
-INSERT INTO `gre_user` VALUES (7, '2010647572', '$2a$10$5rQ1BAhvk8efcT7GJQXNiuk1lYGtF1Z4q/OYJtNZjM3Z7jcVPjFcC', '用户', '3', NULL, NULL, NULL, 1, 0);
+INSERT INTO `gre_user` VALUES (7, '2010647572', '$2a$10$5rQ1BAhvk8efcT7GJQXNiuk1lYGtF1Z4q/OYJtNZjM3Z7jcVPjFcC', '用户', '3', NULL, NULL, NULL, 1, 6);
 
 -- ----------------------------
 -- Table structure for gre_user_device_tag
@@ -448,6 +456,7 @@ DROP TABLE IF EXISTS `gre_user_gm`;
 CREATE TABLE `gre_user_gm`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `account` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `state` tinyint(1) NULL DEFAULT NULL,
   `create_gm` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -456,18 +465,20 @@ CREATE TABLE `gre_user_gm`  (
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `del_flag` tinyint(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gre_user_gm
 -- ----------------------------
-INSERT INTO `gre_user_gm` VALUES (1, 'admin', 'A', 1, NULL, NULL, NULL, '2024-05-19 21:57:26', 0);
-INSERT INTO `gre_user_gm` VALUES (2, 'testuser', 'B', 1, NULL, '2024-05-19 20:08:42', NULL, '2024-05-20 10:57:19', 0);
-INSERT INTO `gre_user_gm` VALUES (3, 'testuser1', 'B', 1, NULL, '2024-05-20 16:17:45', NULL, '2024-05-20 16:17:45', 0);
-INSERT INTO `gre_user_gm` VALUES (4, 'testuser2', 'B', 1, NULL, '2024-05-20 16:18:51', NULL, '2024-05-20 16:18:51', 0);
-INSERT INTO `gre_user_gm` VALUES (5, 'testuser3', 'B', 1, NULL, '2024-05-20 18:44:15', NULL, '2024-05-20 18:44:15', 0);
-INSERT INTO `gre_user_gm` VALUES (6, 'testuser4', 'B', 1, NULL, '2024-05-21 01:20:48', NULL, '2024-05-21 01:20:48', 0);
-INSERT INTO `gre_user_gm` VALUES (7, '2010647572', 'B', 1, NULL, '2024-05-21 02:18:50', NULL, '2024-05-21 02:18:50', 0);
+INSERT INTO `gre_user_gm` VALUES (1, 'admin', '', 'A', 1, NULL, NULL, NULL, '2024-05-19 21:57:26', 0);
+INSERT INTO `gre_user_gm` VALUES (2, 'testuser', '', 'B', 1, NULL, '2024-05-19 20:08:42', NULL, '2024-05-20 10:57:19', 0);
+INSERT INTO `gre_user_gm` VALUES (3, 'testuser1', '', 'B', 1, NULL, '2024-05-20 16:17:45', NULL, '2024-05-20 16:17:45', 0);
+INSERT INTO `gre_user_gm` VALUES (4, 'testuser2', '', 'B', 1, NULL, '2024-05-20 16:18:51', NULL, '2024-05-20 16:18:51', 0);
+INSERT INTO `gre_user_gm` VALUES (5, 'testuser3', '', 'B', 1, NULL, '2024-05-20 18:44:15', NULL, '2024-05-20 18:44:15', 0);
+INSERT INTO `gre_user_gm` VALUES (6, 'testuser4', '', 'B', 1, NULL, '2024-05-21 01:20:48', NULL, '2024-05-21 01:20:48', 0);
+INSERT INTO `gre_user_gm` VALUES (7, '2010647572', '', 'B', 1, NULL, '2024-05-21 02:18:50', NULL, '2024-05-21 20:16:41', 6);
+INSERT INTO `gre_user_gm` VALUES (8, 'admin1', '3213213@11.com', 'A', 1, NULL, '2024-05-21 16:27:57', NULL, '2024-05-21 16:27:57', 0);
+INSERT INTO `gre_user_gm` VALUES (9, 'admin2', '32123213@11.com', 'A', 1, NULL, '2024-05-21 17:03:26', NULL, '2024-05-21 17:03:26', 0);
 
 -- ----------------------------
 -- Table structure for gre_user_msg
@@ -493,6 +504,6 @@ INSERT INTO `gre_user_msg` VALUES (3, NULL, NULL, NULL, '15612341234', '2134@qq.
 INSERT INTO `gre_user_msg` VALUES (4, NULL, NULL, NULL, '15612341234', '21234@qq.com', NULL, NULL, 0);
 INSERT INTO `gre_user_msg` VALUES (5, NULL, NULL, NULL, '15612341234', '2122234@qq.com', NULL, NULL, 0);
 INSERT INTO `gre_user_msg` VALUES (6, NULL, NULL, NULL, '15612341234', '21422234@qq.com', NULL, NULL, 0);
-INSERT INTO `gre_user_msg` VALUES (7, NULL, NULL, NULL, '15612341234', '43174440@qq.com', NULL, NULL, 0);
+INSERT INTO `gre_user_msg` VALUES (7, NULL, NULL, NULL, '15612341234', '43174440@qq.com', NULL, NULL, 6);
 
 SET FOREIGN_KEY_CHECKS = 1;

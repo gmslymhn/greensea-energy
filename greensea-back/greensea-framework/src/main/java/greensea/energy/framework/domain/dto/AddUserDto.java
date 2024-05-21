@@ -43,11 +43,11 @@ public class AddUserDto {
     /**
      * 电话
      */
-    @Schema(description = "用户电话")
-    @Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$", message = "手机号格式有误")
-    @NotBlank(message = "电话不能为空")
-    @Size(min=11, max=11,message="电话长度必须在为11位")
-    private String userPhone;
+//    @Schema(description = "用户电话")
+//    @Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$", message = "手机号格式有误")
+//    @NotBlank(message = "电话不能为空")
+//    @Size(min=11, max=11,message="电话长度必须在为11位")
+//    private String userPhone;
     /**
      * 邮箱
      */

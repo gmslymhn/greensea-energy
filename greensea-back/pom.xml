@@ -14,7 +14,7 @@
     <version>0.0.1</version>
 
     <name>greensea</name>
-    <description>创新实验室对外网站</description>
+    <description>格熙新能源云平台</description>
     <modules>
         <module>greensea-common</module>
         <module>greensea-framework</module>

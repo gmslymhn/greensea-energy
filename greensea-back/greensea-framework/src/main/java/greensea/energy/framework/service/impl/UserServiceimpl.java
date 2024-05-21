@@ -148,7 +148,7 @@ public class UserServiceimpl implements IUserService {
         userMsgEntity.setUserId(userGmEntity.getId());
 //        userMsgEntity.setUserEmail(addUserDto.getUserEmail());
         userMsgEntity.setDelFlag(0);
-        userMsgEntity.setUserPhone(addUserDto.getUserPhone());
+//        userMsgEntity.setUserPhone(addUserDto.getUserPhone());
         return userMsgEntity;
     }
 }
