@@ -173,6 +173,7 @@ public class GmServiceimpl implements IGmService {
         msgVo.setLastLoginTime(gmEntity.getLastLoginTime());
         msgVo.setPhone(gmMsgEntity.getGmPhone());
         msgVo.setEmail(gmMsgEntity.getGmEmail());
+        msgVo.setLastLoginLocation(gmEntity.getLastLoginLocation());
         RoleEntity roleEntity = roleMapper.selectById(gmEntity.getGmType());
         msgVo.setRole(roleEntity.getRoleName());
         msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");

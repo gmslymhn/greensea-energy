@@ -155,7 +155,7 @@ public class UserServiceimpl implements IUserService {
         userEntity.setUserId(userGmEntity.getId());
         userEntity.setUserAccount(addUserDto.getUserAccount());
         userEntity.setUserNickname(addUserDto.getUserNickname());
-        userEntity.setUserType("3");
+        userEntity.setUserType("4");
         userEntity.setUserState(true);
         userEntity.setDelFlag(0);
         userEntity.setLoginTotal(0);
@@ -189,6 +189,7 @@ public class UserServiceimpl implements IUserService {
         msgVo.setLastLoginTime(userEntity.getLastLoginTime());
         msgVo.setPhone(userMsgEntity.getUserPhone());
         msgVo.setEmail(userMsgEntity.getUserEmail());
+        msgVo.setLastLoginLocation(userEntity.getLastLoginLocation());
         RoleEntity roleEntity = roleMapper.selectById(userEntity.getUserType());
         msgVo.setRole(roleEntity.getRoleName());
         msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");

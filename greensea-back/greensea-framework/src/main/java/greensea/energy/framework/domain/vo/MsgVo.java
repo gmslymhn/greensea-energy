@@ -29,6 +29,7 @@ public class MsgVo {
      * 最后登陆ip
      */
     private String lastLoginIp;
+    private String lastLoginLocation;
     /**
      * 用户最后一次登陆时间
      */
