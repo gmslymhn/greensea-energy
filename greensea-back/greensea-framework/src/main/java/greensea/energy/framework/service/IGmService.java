@@ -17,4 +17,6 @@ public interface IGmService {
     R addGm(AddGmDto addGmDto);
 
     R logoutGm();
+
+    R getGmSelfMsg();
 }

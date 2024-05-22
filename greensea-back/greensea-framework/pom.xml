@@ -83,6 +83,12 @@
             <version>4.1.0</version>
         </dependency>
 
+        <!--浏览器解析客户端操作系统、浏览器等-->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

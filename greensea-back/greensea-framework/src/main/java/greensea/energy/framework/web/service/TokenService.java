@@ -1,11 +1,13 @@
 package greensea.energy.framework.web.service;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import greensea.energy.common.EncryptUtils;
 import greensea.energy.common.constant.KeyConstants;
 import greensea.energy.common.utils.ObjectUtils;
 import greensea.energy.common.utils.RandomUtils;
 import greensea.energy.common.utils.RedisUtils;
 import greensea.energy.common.utils.StringUtils;
+import greensea.energy.common.utils.http.AddressUtil;
 import greensea.energy.common.utils.http.IpUtil;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.model.LoginUser;
@@ -71,6 +73,23 @@ public class TokenService {
         return null;
     }
 
+    public LoginUserToken getLoginUserToken1(String token) {
+
+        if (StringUtils.isNotEmpty(token)) {
+            try {
+                String tokenkey = EncryptUtils.Base64Decrypt(getKeyFromToken(token));
+                log.info("tokenKey: "+getTokenKey(tokenkey));
+                if (redisUtils.hasKey(getTokenKey(tokenkey))){
+                    //获取用户id
+                    LoginUserToken loginUserToken = (LoginUserToken) redisUtils.getCacheObject(getTokenKey(tokenkey));
+                    return loginUserToken;
+                }
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+
     /**
      * 获取用户身份信息
      *
@@ -103,8 +122,19 @@ public class TokenService {
         //设置登录信息
         LoginUserToken loginUserToken = new LoginUserToken(loginUser);
         HttpServletRequest request = ServletUtils.getRequest();
+        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+        //获取IP地址
         String ip = IpUtil.getIpAddress(request);
+        //获取操作系统
+        String osName = userAgent.getOperatingSystem().getName();
+        //获取浏览器类型
+        String browser = userAgent.getBrowser().getName();
+        //获取登录地址
+        String location = AddressUtil.getAddressByIP(ip);
         loginUserToken.setIpaddr(ip);
+        loginUserToken.setBrowser(browser);
+        loginUserToken.setLoginLocation(location);
+        loginUserToken.setOs(osName);
         return refreshToken(loginUser, loginUserToken);
     }
 

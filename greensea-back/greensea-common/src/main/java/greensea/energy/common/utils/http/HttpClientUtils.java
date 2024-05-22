@@ -369,7 +369,7 @@ public class HttpClientUtils {
 //        map.put("refresh",1);
 //        JSONObject date = new JSONObject(map);
 //        String response=postJson(newPayUrl,date.toJSONString());
-        System.out.println(response);
+//        System.out.println(response);
 //
 //        JSONObject date1 = JSONObject.parseObject(response);
 //        JSONObject date2 = date1.getJSONObject("data");

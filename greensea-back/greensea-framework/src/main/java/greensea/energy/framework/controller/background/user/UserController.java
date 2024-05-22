@@ -1,6 +1,9 @@
 package greensea.energy.framework.controller.background.user;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import greensea.energy.common.domain.R;
+import greensea.energy.common.utils.http.AddressUtil;
+import greensea.energy.common.utils.http.IpUtil;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import greensea.energy.framework.domain.dto.UserLoginDto;
 import greensea.energy.framework.domain.dto.VerifyRegisterDto;
@@ -10,6 +13,7 @@ import greensea.energy.framework.web.SecurityUtils;
 import greensea.energy.framework.web.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -87,9 +91,31 @@ public class UserController {
         return R.error("系统异常！");
     }
 
+    @PreAuthorize("@ss.hasLoginType('B')")
+    @PostMapping("/getselfmag")
+    @Operation(summary = "获取自己的登陆信息",description = "登陆成功后第一时间通过token调取，可以获得用户自己的信息")
+    public R getSelfMsg() {
+        return iUserService.getUserSelfMsg();
+    }
+
     @PostMapping("/test")
     @Operation(summary = "测试")
-    public R test() {
+    public R test(HttpServletRequest httpServletRequest) {
+
+        UserAgent userAgent = UserAgent.parseUserAgentString(httpServletRequest.getHeader("User-Agent"));
+        //获取IP地址
+        String ip = IpUtil.getIpAddress(httpServletRequest);
+        System.out.println(ip);
+        //获取操作系统
+        String osName = userAgent.getOperatingSystem().getName();
+        System.out.println(osName);
+        //获取浏览器类型
+        String browser = userAgent.getBrowser().getName();
+        System.out.println(browser);
+        //获取登录地址
+        String location = AddressUtil.getAddressByIP(ip);
+        System.out.println(location);
+
         return R.success();
     }
 

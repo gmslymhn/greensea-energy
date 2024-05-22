@@ -19,4 +19,6 @@ public interface IUserService {
     R verifyRegister(String userAccoount, String userEmail);
 
     R logoutUser();
+
+    R getUserSelfMsg();
 }

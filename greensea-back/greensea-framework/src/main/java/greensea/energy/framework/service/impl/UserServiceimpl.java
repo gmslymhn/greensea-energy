@@ -3,15 +3,16 @@ package greensea.energy.framework.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import greensea.energy.common.domain.R;
 import greensea.energy.common.utils.ObjectUtils;
+import greensea.energy.common.utils.http.IpUtil;
 import greensea.energy.common.utils.http.ServletUtils;
 import greensea.energy.framework.domain.dto.AddUserDto;
 import greensea.energy.framework.domain.dto.UserLoginDto;
-import greensea.energy.framework.domain.entity.UserEntity;
-import greensea.energy.framework.domain.entity.UserGmEntity;
-import greensea.energy.framework.domain.entity.UserMsgEntity;
+import greensea.energy.framework.domain.entity.*;
 import greensea.energy.framework.domain.model.LoginUser;
 import greensea.energy.framework.domain.model.LoginUserToken;
+import greensea.energy.framework.domain.vo.MsgVo;
 import greensea.energy.framework.jwt.security.AuthenticationContextHolder;
+import greensea.energy.framework.mapper.RoleMapper;
 import greensea.energy.framework.mapper.UserGmMapper;
 import greensea.energy.framework.mapper.UserMapper;
 import greensea.energy.framework.mapper.UserMsgMapper;
@@ -27,6 +28,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +52,8 @@ public class UserServiceimpl implements IUserService {
     @Autowired
     private LoginService loginService;
     @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -68,12 +72,26 @@ public class UserServiceimpl implements IUserService {
         // 如果身份验证成功，可以从认证对象中获取用户详细信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         if (loginUser.getUserType().equals("B")){
-            String token = tokenService.createToken(loginUser);
-            Map<String, String> map = new HashMap<>();
-            map.put("token", token);
+            Map<String, Object> map = getMap(loginUser);
             return R.success(map);
         }
         return R.error("账号异常！");
+    }
+    private Map<String, Object> getMap(LoginUser loginUser){
+        String token = tokenService.createToken(loginUser);
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", token);
+        UserEntity userEntity = userMapper.selectById(loginUser.getUserId());
+        map.put("lastLoginTime",userEntity.getLastLoginTime());
+        map.put("lastLoginIp",userEntity.getLastLoginIp());
+        map.put("lastLoginLocation",userEntity.getLastLoginLocation());
+        userEntity.setLoginTotal(userEntity.getLoginTotal()+1);
+        LoginUserToken loginUserToken =tokenService.getLoginUserToken1(token);
+        userEntity.setLastLoginIp(loginUserToken.getIpaddr());
+        userEntity.setLastLoginLocation(loginUserToken.getLoginLocation());
+        userEntity.setLastLoginTime(LocalDateTime.now());
+        userMapper.updateById(userEntity);
+        return map;
     }
 
     @Override
@@ -140,15 +158,40 @@ public class UserServiceimpl implements IUserService {
         userEntity.setUserType("3");
         userEntity.setUserState(true);
         userEntity.setDelFlag(0);
+        userEntity.setLoginTotal(0);
         userEntity.setUserPassword(SecurityUtils.encryptPassword(addUserDto.getUserPassword()));
         return userEntity;
     }
     private UserMsgEntity get3(AddUserDto addUserDto,UserGmEntity userGmEntity){
         UserMsgEntity userMsgEntity = new UserMsgEntity();
         userMsgEntity.setUserId(userGmEntity.getId());
-//        userMsgEntity.setUserEmail(addUserDto.getUserEmail());
+        userMsgEntity.setUserEmail(addUserDto.getUserEmail());
         userMsgEntity.setDelFlag(0);
 //        userMsgEntity.setUserPhone(addUserDto.getUserPhone());
         return userMsgEntity;
+    }
+    @Override
+    public R getUserSelfMsg(){
+        Integer id = SecurityUtils.getUserId();
+        UserEntity userEntity = userMapper.selectById(id);
+        UserMsgEntity userMsgEntity = userMsgMapper.selectById(id);
+        if (ObjectUtils.isNull(userMsgEntity)||ObjectUtils.isNull(userEntity)){
+            return R.error("用户异常");
+        }
+        MsgVo msgVo = get1(userEntity,userMsgEntity);
+        return R.success(msgVo);
+    }
+    private MsgVo get1(UserEntity userEntity,UserMsgEntity userMsgEntity){
+        MsgVo msgVo = new MsgVo();
+        msgVo.setAccount(userEntity.getUserAccount());
+        msgVo.setNickname(userEntity.getUserNickname());
+        msgVo.setLastLoginIp(userEntity.getLastLoginIp());
+        msgVo.setLastLoginTime(userEntity.getLastLoginTime());
+        msgVo.setPhone(userMsgEntity.getUserPhone());
+        msgVo.setEmail(userMsgEntity.getUserEmail());
+        RoleEntity roleEntity = roleMapper.selectById(userEntity.getUserType());
+        msgVo.setRole(roleEntity.getRoleName());
+        msgVo.setAvatarUrl("https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/1060da23f3b113b2b5b463a79362a585073ab63910848e4cde3592cebca6e86ec9606c33bc453f781041bee899c21f71?pictype=scale&from=30113&version=3.3.3.3&fname=tx.jpg&size=750");
+        return msgVo;
     }
 }

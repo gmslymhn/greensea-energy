@@ -75,4 +75,11 @@ public class GmController {
         R r = iGmService.addGm(addGmDto);
         return r;
     }
+
+    @PreAuthorize("@ss.hasLoginType('A')")
+    @PostMapping("/getselfmag")
+    @Operation(summary = "获取自己的登陆信息",description = "登陆成功后第一时间通过token调取,可以获得管理员自己的信息")
+    public R getSelfMsg() {
+        return iGmService.getGmSelfMsg();
+    }
 }

@@ -77,6 +77,11 @@ public class UserEntity {
     @TableField("last_login_ip")
     private String lastLoginIp;
     /**
+     * 最后登陆地址
+     */
+    @TableField("last_login_location")
+    private String lastLoginLocation;
+    /**
      * 用户最后一次登陆时间
      */
     @TableField("last_login_time")
