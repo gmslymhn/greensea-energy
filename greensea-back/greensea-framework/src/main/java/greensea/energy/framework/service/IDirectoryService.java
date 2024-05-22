@@ -10,5 +10,5 @@ import greensea.energy.common.domain.R;
  * @Version: 1.0
  **/
 public interface IDirectoryService {
-    R  getGmDirectory(Integer loginType);
+    R  getDirectory(Integer loginType);
 }

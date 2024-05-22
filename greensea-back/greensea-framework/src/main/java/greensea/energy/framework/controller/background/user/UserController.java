@@ -80,9 +80,9 @@ public class UserController {
     @Operation(summary = "获取自己的后台目录",description = "获取用户自己的后台目录")
     public R getSelfDirectory() {
         if (SecurityUtils.getPermission().equals("enterprise")){
-            return iDirectoryService.getGmDirectory(3);
+            return iDirectoryService.getDirectory(3);
         }else if(SecurityUtils.getPermission().equals("personal")){
-            return iDirectoryService.getGmDirectory(4);
+            return iDirectoryService.getDirectory(4);
         }
         return R.error("系统异常！");
     }

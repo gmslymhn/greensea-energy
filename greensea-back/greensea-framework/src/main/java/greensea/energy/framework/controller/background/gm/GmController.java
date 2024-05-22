@@ -61,9 +61,9 @@ public class GmController {
     @Operation(summary = "获取自己的后台目录",description = "获取管理员自己的后台目录")
     public R getSelfDirectory() {
             if (SecurityUtils.getPermission().equals("admin")){
-                return iDirectoryService.getGmDirectory(1);
+                return iDirectoryService.getDirectory(1);
             }else if(SecurityUtils.getPermission().equals("manager")){
-                return iDirectoryService.getGmDirectory(2);
+                return iDirectoryService.getDirectory(2);
             }
         return R.error("系统异常！");
     }

@@ -20,6 +20,12 @@
             <artifactId>greensea-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.3</version>
+        </dependency>
+
         <!--        druid-->
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -23,7 +23,7 @@ public class DirectoryServiceimpl implements IDirectoryService {
     @Autowired
     private DirectiryMapper directiryMapper;
     @Override
-    public R getGmDirectory(Integer loginType){
+    public R getDirectory(Integer loginType){
         QueryWrapper<DirectoryEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("directory_type", loginType);
         List<DirectoryEntity> directoryEntities = directiryMapper.selectList(queryWrapper);
