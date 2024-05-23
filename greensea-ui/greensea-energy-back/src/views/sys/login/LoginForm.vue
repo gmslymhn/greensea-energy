@@ -12,7 +12,7 @@
       <Input
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
+        :placeholder="t('sys.login.username')"
         class="fix-auto-fill"
       />
     </FormItem>
@@ -119,8 +119,8 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    account: '',
+    password: '',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -135,10 +135,12 @@
     try {
       loading.value = true;
       const userInfo = await userStore.login({
-        password: data.password,
-        username: data.account,
+        userPassword: data.password,
+        userAccount: data.account,
         mode: 'none', //不要默认的错误提示
       });
+      console.log('这个真的能打印出来东西嘛');
+      console.log('userInfo', userInfo);
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
@@ -147,6 +149,7 @@
         });
       }
     } catch (error) {
+      console.log('到底哪里');
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),

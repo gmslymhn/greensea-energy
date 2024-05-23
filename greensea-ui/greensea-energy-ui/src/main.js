@@ -6,14 +6,14 @@ import App from './App.vue';
 import { createRouter } from './router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/css/element.scss'
-import couter from './untils/v-counter'
+import vCounter from './untils/v-counter'
 const app = createApp(App);
 const router = createRouter();
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
-app.use(couter)
+app.directive('counter',vCounter)
 
 app.use(router);
 app.use(ElementPlus)

@@ -1,3 +1,4 @@
+/*这个是我加的注释*/
 import type { FormInstance } from 'ant-design-vue/lib/form/Form';
 import type {
   RuleObject,
@@ -39,7 +40,6 @@ export function useFormValid<T extends Object = any>(formRef: Ref<FormInstance>)
     const form = unref(formRef);
     return form?.validate ?? ((_nameList?: NamePath) => Promise.resolve());
   });
-
   async function validForm() {
     const form = unref(formRef);
     if (!form) return;

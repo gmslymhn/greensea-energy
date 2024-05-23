@@ -1,0 +1,6 @@
+
+> @vben/eslint-config@1.0.0 stub D:\项目\greensea-energy\greensea-ui\greensea-energy-back\internal\eslint-config
+> pnpm unbuild --stub
+
+[36mℹ[39m Stubbing eslint-config
+[36mℹ[39m Cleaning dist directory: [36m./dist[39m
